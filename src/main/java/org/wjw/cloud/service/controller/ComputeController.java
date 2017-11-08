@@ -1,4 +1,4 @@
-package com.example.demo;
+package org.wjw.cloud.service.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ComputeController {
-
 	private final Logger logger = Logger.getLogger(getClass());
 
 	@Autowired
 	private DiscoveryClient client;
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public Integer add(@RequestParam Integer a, @RequestParam Integer b) {
-		ServiceInstance instance = client.getInstances(client.getServices().get(0)).get(0); // .getLocalServiceInstance();
-		Integer r = a + b;
+	public int add(@RequestParam Integer a, @RequestParam Integer b) {
+		int r = a + b;
+
+		ServiceInstance instance = client.getInstances(client.getServices().get(0)).get(0);
 		logger.info("/add, host:" + instance.getHost() + ", service_id:" + instance.getServiceId() + ", result:" + r);
 		return r;
 	}
