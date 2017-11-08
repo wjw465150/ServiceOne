@@ -17,7 +17,7 @@ public class ComputeController {
 	private DiscoveryClient client;
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public int add(@RequestParam Integer a, @RequestParam Integer b) {
+	public int add(@RequestParam int a, @RequestParam int b) {
 		int r = a + b;
 
 		ServiceInstance instance = client.getInstances(client.getServices().get(0)).get(0);
