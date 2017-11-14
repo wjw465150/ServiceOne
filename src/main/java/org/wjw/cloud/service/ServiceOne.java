@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
@@ -18,7 +19,13 @@ public class ServiceOne implements EnvironmentAware {
 
 	public static void main(String[] args) {
 		// SpringApplication.run(ServiceOne.class, args);
-		new SpringApplicationBuilder(ServiceOne.class).web(true).run(args);
+		final ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(ServiceOne.class).web(true).run(args);
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				applicationContext.close();
+			}
+		});
 	}
 
 	@Override
